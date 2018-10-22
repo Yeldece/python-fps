@@ -165,7 +165,7 @@ def mainloop(	dt):
 		g.listener.set_position((g.me.x, g.me.z, g.me.y))
 		g.listener.set_orientation((movement.getpointer()[0], 0, movement.getpointer()[1], 0, 1, 0))
 	except Exception as e:
-		g.speak(str(e))
+		g.log_add_entry(str(e), True)
 @window.event
 def draw():
 	window.clear()
@@ -180,7 +180,7 @@ def on_key_press(symbol, modifiers):
 				g.menu=False
 				g.menupos=-1
 		except Exception as e:
-			g.speak(str(e))
+			g.log_add_entry(str(e), True)
 	try:
 		if g.menu and g.connecting==False:
 			if symbol == key.UP and g.menupos>0:
@@ -281,7 +281,7 @@ def on_key_press(symbol, modifiers):
 							m.open=True
 						
 	except Exception as e:
-		g.speak(str(e))
+		g.log_add_entry(str(e), True)
 	g.input.append(key.symbol_string(symbol))
 @window.event
 def on_key_release(symbol, modifiers):
