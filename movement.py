@@ -145,7 +145,6 @@ def move(theta, distance):
 				g.roomsound.stop()
 			g.roomsound=g.oalOpen(map.myroom(), ".wav")
 			g.roomsound.set_looping(True)
-#			g.sourcelist.append(g.roomsound)
 			g.roomsound.play()
 
 def getpointer():
