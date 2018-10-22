@@ -92,4 +92,4 @@ def parsedata(mapname):
 		g.mapname=mapname
 		g.loaded=True
 	except Exception as e:
-		auto.speak("Error on parsing data: "+str(e))
+		g.log_add_entry("Error on parsing data: "+str(e), True)
