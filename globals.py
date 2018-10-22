@@ -245,6 +245,11 @@ def speak(text):
 	except Exception as e:
 		auto.speak("Error on speaking a text: "+str(e))
 
+def log_add_entry(entry, should_speak=False):
+	log.add_entry(entry)
+	if should_speak:
+		auto.speak(entry)
+
 def exit():
 	log.write("log.log")
 	sys.exit()
