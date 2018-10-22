@@ -23,7 +23,7 @@ class Menu:
 		self.itempos=itempos
 		self.items=items
 		auto.speak(title+". "+items[itempos])
-#		self.clock=pygame.time.Clock()
+		self.clock=pygame.time.Clock()
 		self.fpscap=fpscap
 		
 	
@@ -34,7 +34,7 @@ class Menu:
 			auto.speak(str(e))
 	def loop(self):
 		while 1:
-#		self.clock.tick(self.fpscap)
+			self.clock.tick(self.fpscap)
 			cleanup()
 			if 'ENTER' in g.input:
 				source=oalopen(entersound)
