@@ -1,4 +1,3 @@
-from menu import Menu
 import console
 import map
 import doors
