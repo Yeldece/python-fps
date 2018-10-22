@@ -8,7 +8,7 @@ except Exception as e:
 lang=gettext.translation(langstring, localedir='locale', languages=[langstring])
 lang.install()
 import ast
-# We use this module to evaluate strings as python expretions. At least for now
+#We use this module to evaluate strings as python expretions. At least for now
 import random
 import movement
 import os
@@ -238,7 +238,7 @@ def falldown():
 	except Exception as e:
 		auto.speak("\r\nError acurd while falling down: {0}".format(str(e)))
 
-# This function tries to translate a text and then speak the translated text. If you don't want any translation use auto.speak. For more info on translation read the help file and then the persian.lng file which can be a good instance.
+#This function just speaks a text. Maybe for easier writing...
 def speak(text):
 	try:
 		auto.speak(text)
