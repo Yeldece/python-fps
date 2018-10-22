@@ -183,7 +183,7 @@ def perform_action(what):
 		elif what == "exit":
 			exit()
 	except Exception as e:
-		auto.speak(str(e))
+		log_add_entry("\r\n"+str(e), True)
 
 def find_dirs(path):
 	ourlist=[]
