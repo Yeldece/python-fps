@@ -281,7 +281,6 @@ def on_key_press(symbol, modifiers):
 							opensound.play()
 							m.open=True
 						
-#				g.speak(_('%s, %s, %s' % (g.me.x, g.me.y, g.me.z))
 	except Exception as e:
 		g.speak(str(e))
 	g.input.append(key.symbol_string(symbol))
