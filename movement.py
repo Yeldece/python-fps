@@ -104,7 +104,7 @@ def turnright(deg, inc):
 	return deg
 
 def move(theta, distance):
-	g.step+=1
+	g.step+=0.1
 	tempa = g.me.x+(distance*math.cos((theta*3.14)/180))
 	tempb=g.me.y+(distance*math.sin((theta*3.14)/180))
 	tempa=round(tempa, 2)
@@ -119,8 +119,8 @@ def move(theta, distance):
 				doorfound=True
 				break
 	if "wall" in temps or doorfound:
-		if g.step >5:
-			g.step=0
+		if g.step >0.5:
+			g.step=0.0
 			wall=g.oalOpen("sounds/wall.wav", ".wav")
 			wall.set_source_relative(True)
 			g.sourcelist.append(wall)
@@ -128,8 +128,9 @@ def move(theta, distance):
 	elif "wall" not in temps and doorfound == False:
 		g.me.x=tempa
 		g.me.y=tempb
-		if g.step >5:
-			g.step=0
+		if g.step >0.5:
+			g.step=0.0
+			move(theta, 0.5)
 			if map.mytile() != "":
 				tempsplit=temps.split("|")
 				stepsounds=list()
