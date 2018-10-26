@@ -1,4 +1,6 @@
+from math import ceil, floor
 import console
+import os
 import map
 import doors
 import movement
@@ -230,6 +232,20 @@ def on_key_press(symbol, modifiers):
 				else:
 					g.speak(_("Failed editing map, Empty data passed"))
 
+			if symbol == key.W or symbol == key.A or symbol == key.D or symbol == key.S:
+				if map.mytile() != "":
+					tempsplit=map.mytile().split("|")
+					stepsounds=list()
+					for x in tempsplit:
+						if os.path.isdir("sounds/footsteps/"+map.mytile()+"/slow"):
+							stepstr="sounds/footsteps/"+x+"/slow/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x+"/slow"))))+".wav"
+							if os.path.isfile(stepstr):
+								stepsounds.append(g.oalOpen(stepstr))
+					if len(stepsounds) > 0:
+						for stepsound in stepsounds:
+							stepsound.set_source_relative(True)
+							g.sourcelist.append(stepsound)
+							stepsound.play()
 			if symbol==key.SPACE and g.jumping==0 and g.loaded and g.falling==0 and map.tile(g.me.x, g.me.y, g.me.z)!="":
 				g.jumping=1
 				g.ascending=True
@@ -287,6 +303,23 @@ def on_key_press(symbol, modifiers):
 def on_key_release(symbol, modifiers):
 	if symbol==key.LSHIFT or symbol==key.RSHIFT:
 		g.WalkTime=g.MainWalkTime
+	if symbol == key.W or symbol == key.D or symbol == key.S or symbol == key.A:
+		if g.step > 0.0 and g.step <=0.5:
+			if g.step >= 0.3:
+				stepback=g.oalOpen("sounds/footsteps/movement/stepback"+str(random.randint(1,6))+".wav")
+				stepback.set_source_relative(True)
+				g.sourcelist.append(stepback)
+				stepback.play()
+			g.step=0.0
+			if symbol == key.A:
+				g.me.x=ceil(g.me.x)
+			elif symbol == key.D:
+				g.me.x=floor(g.me.x)
+			elif symbol == key.S:
+				g.me.y=ceil(g.me.y)
+			elif symbol == key.W:
+				g.me.y=floor(g.me.y)
+		
 	if key.symbol_string(symbol) in g.input:
 		g.input.remove(key.symbol_string(symbol))
 pyglet.clock.schedule_interval(mainloop, 1/120.0)
