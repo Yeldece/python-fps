@@ -313,12 +313,12 @@ def on_key_release(symbol, modifiers):
 			g.step=0.0
 			if symbol == key.A:
 				g.me.x=ceil(g.me.x)
-			elif symbol == key.D:
+			if symbol == key.D:
 				g.me.x=floor(g.me.x)
-			elif symbol == key.S:
-				g.me.y=ceil(g.me.y)
-			elif symbol == key.W:
+			if symbol == key.S:
 				g.me.y=floor(g.me.y)
+			if symbol == key.W:
+				g.me.y=ceil(g.me.y)
 		
 	if key.symbol_string(symbol) in g.input:
 		g.input.remove(key.symbol_string(symbol))
