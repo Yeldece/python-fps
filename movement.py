@@ -1,3 +1,4 @@
+import os
 import random
 import map
 import globals as g
@@ -104,50 +105,57 @@ def turnright(deg, inc):
 	return deg
 
 def move(theta, distance):
-	g.step+=0.1
-	tempa = g.me.x+(distance*math.cos((theta*3.14)/180))
-	tempb=g.me.y+(distance*math.sin((theta*3.14)/180))
-	tempa=round(tempa, 2)
-	tempb=round(tempb, 2)
-	temps=""
-	if "%d:%d:%d"%(tempa, tempb, g.me.z) in map.tiles:
-		temps=map.tiles["%d:%d:%d"%(tempa,tempb,g.me.z)]
-	doorfound=False
-	for m in map.door:
-		if get_distance(int(tempa),int(tempb),int(g.me.z),m.x,m.y,m.z) == 0:
-			if m.open==False:
-				doorfound=True
-				break
-	if "wall" in temps or doorfound:
-		if g.step >0.5:
-			g.step=0.0
-			wall=g.oalOpen("sounds/wall.wav", ".wav")
-			wall.set_source_relative(True)
-			g.sourcelist.append(wall)
-			wall.play()
-	elif "wall" not in temps and doorfound == False:
-		g.me.x=tempa
-		g.me.y=tempb
-		if g.step >0.5:
-			g.step=0.0
-			move(theta, 0.5)
-			if map.mytile() != "":
-				tempsplit=temps.split("|")
-				stepsounds=list()
-				for x in tempsplit:
-					stepsounds.append(g.oalOpen("sounds/footsteps/"+x+"/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x))))+".wav", ".wav"))
-				for stepsound in stepsounds:
-					stepsound.set_source_relative(True)
-					g.sourcelist.append(stepsound)
-					stepsound.play()
-		if map.myroom()!="" and map.myroom() != g.currentroom:
-			g.currentroom=map.myroom()
-			if g.roomsound.get_state()==al.AL_PLAYING:
-				g.roomsound.stop()
-			g.roomsound=g.oalOpen(map.myroom(), ".wav")
-			g.roomsound.set_looping(True)
-			g.roomsound.play()
-
+	try:
+		g.step+=0.1
+		tempa = g.me.x+(distance*math.cos((theta*3.14)/180))
+		tempb=g.me.y+(distance*math.sin((theta*3.14)/180))
+		tempa=round(tempa, 2)
+		tempb=round(tempb, 2)
+		temps=""
+		if "%d:%d:%d"%(tempa, tempb, g.me.z) in map.tiles:
+			temps=map.tiles["%d:%d:%d"%(tempa,tempb,g.me.z)]
+		doorfound=False
+		for m in map.door:
+			if get_distance(int(tempa),int(tempb),int(g.me.z),m.x,m.y,m.z) == 0:
+				if m.open==False:
+					doorfound=True
+					break
+		if "wall" in temps or doorfound:
+			if g.step >0.5:
+				g.step=0.0
+				wall=g.oalOpen("sounds/wall.wav", ".wav")
+				wall.set_source_relative(True)
+				g.sourcelist.append(wall)
+				wall.play()
+		elif "wall" not in temps and doorfound == False:
+			g.me.x=tempa
+			g.me.y=tempb
+			if g.step >0.5:
+				g.step=0.0
+				move(theta, 0.5)
+				if g.ascenddistance > 0:
+					g.checkplatform()
+				if map.mytile() != "":
+					tempsplit=temps.split("|")
+					stepsounds=list()
+					for x in tempsplit:
+						if os.path.isdir("sounds/footsteps/"+x):
+							if len(g.find_files("sounds/footsteps/"+x))>0:
+								stepsounds.append(g.oalOpen("sounds/footsteps/"+x+"/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x))))+".wav", ".wav"))
+					if len(stepsounds)>0:
+						for stepsound in stepsounds:
+							stepsound.set_source_relative(True)
+							g.sourcelist.append(stepsound)
+							stepsound.play()
+			if map.myroom()!="" and map.myroom() != g.currentroom:
+				g.currentroom=map.myroom()
+				if g.roomsound.get_state()==al.AL_PLAYING:
+					g.roomsound.stop()
+				g.roomsound=g.oalOpen(map.myroom(), ".wav")
+				g.roomsound.set_looping(True)
+				g.roomsound.play()
+	except Exception as e:
+		g.log_add_entry("Error on movement function: "+str(e)+", Your tile: "+map.mytile(), True)
 def getpointer():
 	tempa = 0+(1*math.cos((g.direction*3.14)/180))
 	tempb=0+(1*math.sin((g.direction*3.14)/180))
