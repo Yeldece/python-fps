@@ -112,11 +112,14 @@ def mainloop(	dt):
 					tempsplit=map.mytile().split("|")
 					stepsounds=list()
 					for x in tempsplit:
-						stepsounds.append(g.oalOpen("sounds/footsteps/"+x+"/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x))))+".wav", ".wav"))
-					for stepsound in stepsounds:
-						stepsound.set_source_relative(True)
-						g.sourcelist.append(stepsound)
-						stepsound.play()
+						if os.path.isdir("sounds/footsteps/"+x):
+							if len(g.find_files("sounds/footsteps/"+x))>0:
+								stepsounds.append(g.oalOpen("sounds/footsteps/"+x+"/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x))))+".wav", ".wav"))
+					if len(stepsounds)>0:
+						for stepsound in stepsounds:
+							stepsound.set_source_relative(True)
+							g.sourcelist.append(stepsound)
+							stepsound.play()
 					g.me.z+=1
 					if "wall" in map.tile(g.me.x, g.me.y, g.me.z+1):
 						wallsound=g.oalOpen("sounds/wall.wav")
@@ -128,11 +131,14 @@ def mainloop(	dt):
 					tempsplit=map.mytile().split("|")
 					stepsounds=list()
 					for x in tempsplit:
-						stepsounds.append(g.oalOpen("sounds/footsteps/"+x+"/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x))))+".wav", ".wav"))
-					for stepsound in stepsounds:
-						stepsound.set_source_relative(True)
-						g.sourcelist.append(stepsound)
-						stepsound.play()
+						if os.path.isdir("sounds/footsteps/"+x):
+							if len(g.find_files("sounds/footsteps/"+x))>0:
+								stepsounds.append(g.oalOpen("sounds/footsteps/"+x+"/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x))))+".wav", ".wav"))
+					if len(stepsounds)>0:
+						for stepsound in stepsounds:
+							stepsound.set_source_relative(True)
+							g.sourcelist.append(stepsound)
+							stepsound.play()
 					g.me.z-=1
 					if "wall" in map.tile(g.me.x, g.me.y, g.me.z-1):
 						wallsound=g.oalOpen("sounds/wall.wav")
@@ -144,23 +150,15 @@ def mainloop(	dt):
 				if "W" in g.input:
 					g.walktimer.restart()
 					movement.move(g.direction, 0.1)
-					if g.ascenddistance > 0:
-						g.checkplatform()
 				elif "S" in g.input:
 					g.walktimer.restart()
 					movement.move(movement.turnleft(g.direction, 180), 0.1)
-					if g.ascenddistance > 0:
-						g.checkplatform()
 				elif "A" in g.input:
 					g.walktimer.restart()
 					movement.move(movement.turnleft(g.direction, 90), 0.1)
-					if g.ascenddistance > 0:
-						g.checkplatform()
 				elif "D" in g.input:
 					g.walktimer.restart()
 					movement.move(movement.turnright(g.direction, 90), 0.1)
-					if g.ascenddistance > 0:
-						g.checkplatform()
 
 
 
@@ -237,7 +235,7 @@ def on_key_press(symbol, modifiers):
 					tempsplit=map.mytile().split("|")
 					stepsounds=list()
 					for x in tempsplit:
-						if os.path.isdir("sounds/footsteps/"+map.mytile()+"/slow"):
+						if os.path.isdir("sounds/footsteps/"+x+"/slow"):
 							stepstr="sounds/footsteps/"+x+"/slow/"+str(random.randint(1, len(g.find_files("sounds/footsteps/"+x+"/slow"))))+".wav"
 							if os.path.isfile(stepstr):
 								stepsounds.append(g.oalOpen(stepstr))
