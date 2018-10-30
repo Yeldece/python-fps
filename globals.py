@@ -1,4 +1,7 @@
 import gettext
+import logging
+#initialize the logging module to handle just the tracebacks. Logger is for logging normal events. You can log the exception texts in the logger as well.
+logging.basicConfig(filename="tracebacks.log", level=logging.DEBUG)
 langstring=""
 try:
 	with open("locale/savedlng", "r") as f:
@@ -24,7 +27,7 @@ from AGK.mainframe import timer
 from openal import *
 NICK=""
 c=None
-me=movement.vector(0, 0, 32)
+me=movement.vector(27, 22, 0)
 class TextEntryDialog(wx.Dialog):
     def __init__(self, parent, title, caption):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -131,7 +134,7 @@ def reset():
 	currentroom=""
 	roomsound.stop()
 	direction=270
-	me=movement.vector(0, 0, 32)
+	me=movement.vector(27, 22, 0)
 	map.door=list()
 	map.tiles={}
 	map.rooms={}
@@ -245,8 +248,10 @@ def speak(text):
 	except Exception as e:
 		auto.speak("Error on speaking a text: "+str(e))
 
-def log_add_entry(entry, should_speak=False):
-	log.add_entry(entry)
+def log_add_entry(entry, should_speak=False, add_to_logger=False):
+	if add_to_logger==True:
+		log.add_entry(entry)
+	logging.exception(entry)
 	if should_speak:
 		auto.speak(entry)
 
