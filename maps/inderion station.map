@@ -52,8 +52,8 @@ z="0"
 lengthx="25"
 lengthy="1"
 depth="5"
-sound="sounds/relative/room2.wav"
-type="dirt"
+sound="sounds/relative/room27.wav"
+type="concrete"
 
 [roomedgestairs]
 x="0"
@@ -64,14 +64,6 @@ lengthy="2"
 depth="20"
 sound="sounds/relative/room2.wav"
 type="dirt2|dirt|concrete"
-
-[wall5]
-x="25"
-y="25"
-z="6"
-length="1"
-depth="5"
-side="23"
 
 [wall]
 x="-1"
