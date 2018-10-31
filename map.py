@@ -76,6 +76,15 @@ def parsedata(mapname):
 				if "rolloff_factor" in config[m]:
 					rolloff_factor=float(config[m]["rolloff_factor"])
 				randomambs.append(randomambience.RandomAmbience(x, y, z, sp, time, reference_distance, rolloff_factor))
+			if m[0:4]=="tile":
+				x=int(config[m]["x"])
+				y=int(config[m]["y"])
+				z=int(config[m]["z"])
+				type=config[m]["type"]
+				lengthx=int(config[m]["lengthx"])
+				lengthy=int(config[m]["lengthy"])
+				depth=int(config[m]["depth"])
+				spawn_tile(x, (x+lengthx-1), y, (y+-(lengthy)+1), z, (z+depth), type)
 			if m[0:4] == "room":
 				roomx=int(config[m]["x"])
 				roomy=int(config[m]["y"])
