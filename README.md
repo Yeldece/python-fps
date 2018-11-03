@@ -15,6 +15,9 @@ pyglet
 Note. Please copy and paste the pyglet folder that is in this folder to your python directory/lib/site-packages. Make sure you have pyglet installed before doing this. It removes the exiting with the escape key. By default, It exits the program whenever, whereever(in the program) you press escape.
 pyopenal
 wxpython
+Accessible output
+Get the Accessible Output library from carter temm's mirror of code formally available on hg.q-continuum.net on github:
+https://github.com/cartertemm/continuum-repositories
 
 keys
 w, a, s, d, walk
